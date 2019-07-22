@@ -1,0 +1,94 @@
+<div ng-init="init()">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                List of peoples
+            </h3>
+        </div>
+    </div>
+    <div class="row" ng-show="error.show">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <strong>
+                    <i class="fa fa-exclamation-triangle"></i>
+                    An error occurred:
+                </strong>
+                <hr>
+                {{ error.message }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success pull-right" ng-click="newPerson()">Add Person</button>
+        </div>
+        <div class="col-md-12">
+            <form name="personEditInline" novalidate="novalidate">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th></th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Profession</th>
+                        <th width="10%">
+
+                        </th>
+                    </tr>
+                    <tr ng-repeat="person in persons">
+                        <td>
+                            <input type="checkbox" ng-model="person.selected" ng-disabled="updating || person.editing">
+                        </td>
+                        <td>
+                            <span ng-hide="person.editing">{{ person.firstName }}</span>
+                            <input type="text" class="form-control" name="firstName{{ person.id }}"
+                                   ng-model="personEditing.firstName"
+                                   ng-show="person.editing"
+                                   ng-required="person.editing">
+                        </td>
+                        <td>
+                            <span ng-hide="person.editing">{{ person.lastName }}</span>
+                            <input type="text" class="form-control" name="lastName{{ person.id }}"
+                                   ng-model="personEditing.lastName"
+                                   ng-show="person.editing"
+                                   ng-required="person.editing">
+                        </td>
+                        <td>
+                            <span ng-hide="person.editing">{{ person.age }}</span>
+                            <input type="number" class="form-control" name="age{{ person.id }}"
+                                   ng-model="personEditing.age"
+                                   ng-show="person.editing"
+                                   ng-required="person.editing">
+                        </td>
+                        <td>
+                            <span ng-hide="person.editing">{{ person.email }}</span>
+                            <input type="email" class="form-control" name="email{{ person.id }}"
+                                   ng-model="personEditing.email"
+                                   ng-show="person.editing"
+                                   ng-required="person.editing">
+                        </td>
+                        <td>
+                            <span ng-hide="person.editing">{{ person.profession }}</span>
+                            <input type="text" class="form-control" name="profession{{ person.id }}"
+                                   ng-model="personEditing.profession"
+                                   ng-show="person.editing"
+                                   ng-required="person.editing">
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" ng-click="editPerson(person)" ng-hide="person.editing" ng-disabled="updating">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success" ng-click="savePerson(person)" ng-show="person.editing" ng-disabled="updating">
+                                <i class="fa fa-check"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" ng-click="deletePerson(person)" ng-disabled="updating">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

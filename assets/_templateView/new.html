@@ -1,0 +1,98 @@
+<div ng-init="init();">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                <a href="#">
+                    List
+                </a> > New Person
+            </h3>
+        </div>
+    </div>
+    <div class="row" ng-show="error.show">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <strong>
+                    <i class="fa fa-exclamation-triangle"></i>
+                    An error occurred:
+                </strong>
+                <hr>
+                {{ error.message }}
+            </div>
+        </div>
+    </div>
+    <form name="personForm" novalidate="novalidate">
+        <div class="card bg-light">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Person data
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" name="firstName" id="firstName" required="required" class="form-control"
+                                   ng-model="person.firstName">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" name="lastName" id="lastName" required="required" class="form-control"
+                                   ng-model="person.lastName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-12">
+                        <div class="form-group">
+                            <label for="age">Age:</label>
+                            <input type="number" name="age" id="age" required="required" class="form-control"
+                                   ng-model="person.age">
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-12">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" required="required" class="form-control"
+                                   ng-model="person.email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="profession">Profession:</label>
+                            <input type="profession" name="profession" id="profession" required="required" class="form-control"
+                                   ng-model="person.profession">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label for="aboutMe">About Me:</label>
+                            <textarea type="aboutMe" name="aboutMe" id="aboutMe" required="required" class="form-control" rows="10"
+                                      ng-model="person.aboutMe"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-danger pull-left" ng-click="cancel()">
+                            <i class="fa fa-arrow-left"></i>
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-success pull-right" ng-click="save()">
+                            Submit
+                            <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
