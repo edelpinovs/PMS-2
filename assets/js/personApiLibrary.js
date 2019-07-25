@@ -31,26 +31,25 @@ personModule.factory('PersonApiService', ['$rootScope', '$http', function($rootS
             method: method,
             url: url,
             data: data,
-            headers: { 'Content-Type': contentType }
-        }).then(function(data) {
+            headers: {'Content-Type': contentType}
+        }).then(function (data) {
             if (typeof data === "object") {
                 if (data && data.status === 200) {
                     var dataContent = data.data;
                     if (successCall)
                         successCall(dataContent);
-                }
-                else if (errorCall)
+                } else if (errorCall)
                     errorCall(data.statusText);
             } else if (errorCall)
                 errorCall(data);
-        }).catch(function(errorMessage) {
+        }).catch(function (errorMessage) {
             if (errorCall)
                 errorCall(errorMessage);
 
-        }).finally(function(){
+        }).finally(function () {
             if (alwaysCall)
                 alwaysCall();
-        })
+        });
     };
 
     Private.mockCreateUniqueId = function() {
@@ -69,34 +68,72 @@ personModule.factory('PersonApiService', ['$rootScope', '$http', function($rootS
     };
 
     PersonApiService.deletePerson = function(person, successCall, errorCall, alwaysCall) {
-        var url = Private.url;
+        var url = Private.url + '/' + person.id;
         var post = Private.encodeJsonToStringForPost(person);
-        /**
-         * Dont call api since doesn't support add
-         */
-        //Private.sendRequest(url, 'DELETE', 'application/json', post, successCall, errorCall, alwaysCall);
-        successCall(person);
+        $http.delete(url, post).then(function(data) {
+            if (typeof data === "object") {
+                if (data && data.status === 200) {
+                    var dataContent = data.data;
+                    if (successCall)
+                        successCall(dataContent);
+                }
+                else if (errorCall)
+                    errorCall(data.statusText);
+            } else if (errorCall)
+                errorCall(data);
+        }).catch(function(errorMessage) {
+            if (errorCall)
+                errorCall(errorMessage);
+        }).finally(function() {
+            if (alwaysCall)
+                alwaysCall();
+        });
     };
 
     PersonApiService.addPerson = function(person, successCall, errorCall, alwaysCall) {
         var url = Private.url;
         var post = Private.encodeJsonToStringForPost(person);
-        /**
-         * Dont call api since doesn't support add
-         */
-        //Private.sendRequest(url, 'POST', 'application/json', post, successCall, errorCall, alwaysCall);
-        person.id = Private.mockCreateUniqueId();
-        successCall(person);
+        $http.post(url, post).then(function(data) {
+            if (typeof data === "object") {
+                if (data && data.status === 200 || data.status === 201) {
+                    var dataContent = data.data;
+                    if (successCall)
+                        successCall(dataContent);
+                }
+                else if (errorCall)
+                    errorCall(data.statusText);
+            } else if (errorCall)
+                errorCall(data);
+        }).catch(function(errorMessage) {
+            if (errorCall)
+                errorCall(errorMessage);
+        }).finally(function() {
+            if (alwaysCall)
+                alwaysCall();
+        });
     };
 
     PersonApiService.updatePerson = function(person, successCall, errorCall, alwaysCall) {
-        var url = Private.url;
+        var url = Private.url + '/' + person.id;
         var post = Private.encodeJsonToStringForPost(person);
-        /**
-         * Dont call api since doesn't support update
-         */
-        //Private.sendRequest(url, 'PUT', 'application/json', post, successCall, errorCall, alwaysCall);
-        successCall(person);
+        $http.put(url, post).then(function(data) {
+            if (typeof data === "object") {
+                if (data && data.status === 200 || data.status === 204) {
+                    var dataContent = data.data;
+                    if (successCall)
+                        successCall(dataContent);
+                }
+                else if (errorCall)
+                    errorCall(data.statusText);
+            } else if (errorCall)
+                errorCall(data);
+        }).catch(function(errorMessage) {
+            if (errorCall)
+                errorCall(errorMessage);
+        }).finally(function() {
+            if (alwaysCall)
+                alwaysCall();
+        });
     };
 
     return PersonApiService;
@@ -125,6 +162,7 @@ personModule.factory('PersonService', ['$rootScope', 'PersonApiService', functio
 
     PersonService.addPersonAsync = function(person, successCall, errorCall, alwaysCall) {
         PersonApiService.addPerson(person, function(data) {
+            person.id = data.id;
             PersonService.list.push(person);
             $rootScope.$broadcast('addPerson');
             successCall(data);

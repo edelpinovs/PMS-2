@@ -56,23 +56,9 @@ app.controller('IndexController', ['$scope', '$location', 'PersonService', funct
         person.editing = true;
     };
 
-    $scope.savePerson = function(person) {
-        if ($scope.personEditInline.$valid) {
-            PersonService.updatePersonAsync($scope.personEditing, function() {
-                $scope.success = { show: true, message: 'Update successfully' };
-            }, function(error) {
-                $scope.error = { show: true, message: error };
-            }, function() {
-                $scope.updating = false;
-            });
-        }
-        else {
-            $scope.error = { show: true, message: 'Invalid fields, please check all fields an try again' };
-        }
-    };
-
     $scope.deletePerson = function(person) {
         $scope.error = null;
+        $scope.success = null;
         if (person.editing) {
             person.editing = false;
             $scope.personEditing = null;
@@ -93,6 +79,7 @@ app.controller('IndexController', ['$scope', '$location', 'PersonService', funct
 
     $scope.savePerson = function(person) {
         $scope.error = null;
+        $scope.success = null;
         if ($scope.personEditInline.$valid) {
             $scope.updating = true;
             PersonService.updatePersonAsync($scope.personEditing, function() {
