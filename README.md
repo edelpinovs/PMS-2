@@ -16,4 +16,6 @@ This version is a basic variant, implemented in angular 1.7.5 version.
 
 You can access it and see it working at (<http://adminhudnu-001-site8.gtempurl.com/#!/index>)
 
-or (<http://www.vitoscode.com/people_manager/index.html>)
+## Changes log
+
+- Fix store API security issue.  
