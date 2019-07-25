@@ -18,4 +18,4 @@ You can access it and see it working at (<http://adminhudnu-001-site8.gtempurl.c
 
 ## Changes log
 
-- Fix store API security issue.  
+- Solve the security problem by saving through the API.
